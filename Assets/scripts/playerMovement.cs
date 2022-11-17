@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
+    //walking
     public float speed = 10;
+    float dirX = Input.GetAxis("Horizontal");
 
-    public float buttonTime = 0.3f;
+    //jumping
+    public Rigidbody2D rb;
+    public float buttonTime = 0.5f;
+    public float jumpHeight = 5;
+    public float cancelRate = 100;
     float jumpTime;
     bool jumping;
-    float jumpForce = 15;
+    bool jumpCancelled;
 
+    //schooting
     public GameObject bullet;
     public float facingDirX = 1;
 
@@ -20,14 +27,21 @@ public class playerMovement : MonoBehaviour
         
     }
 
+    private void FixedUpdate()
+    {
+        transform.Translate(transform.right * dirX * speed * Time.deltaTime);
+
+        //jump 
+
+        if (jumpCancelled && jumping && rb.velocity.y > 0)
+        {
+            rb.AddForce(Vector2.down * cancelRate);
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
-        float dirX = Input.GetAxis("Horizontal");
-        float dirY = Input.GetAxis("Vertical");
-        
-
-        transform.Translate(transform.right * dirX * speed * Time.deltaTime);
 
         if (dirX == -1 || dirX ==1)
         {
@@ -40,22 +54,30 @@ public class playerMovement : MonoBehaviour
             spawnedBullet.GetComponent<bullet>().dirX = facingDirX;
         }
 
-        //jump https://www.youtube.com/watch?v=c9kxUvCKhwQ
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumping = true;
+            jumpCancelled = false;
             jumpTime = 0;
         }
         if (jumping)
         {
             jumpTime += Time.deltaTime;
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                jumpCancelled = true;
+            }
+            if (jumpTime > buttonTime)
+            {
+                jumping = false;
+            }
         }
-        if (Input.GetKeyUp(KeyCode.Space) | jumpTime > buttonTime)
-        {
-            jumping = false;
-        }
-        
-        Rigidbody2D.velocity = new Vector2(rb.velocity.x, jumpForce);
+
     }
+
+
 }
