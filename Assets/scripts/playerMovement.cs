@@ -6,7 +6,7 @@ public class playerMovement : MonoBehaviour
 {
     //walking
     public float speed = 10;
-    float dirX = Input.GetAxis("Horizontal");
+    float dirX;
 
     //jumping
     public Rigidbody2D rb;
@@ -29,6 +29,8 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+       dirX = Input.GetAxis("Horizontal");
+
         transform.Translate(transform.right * dirX * speed * Time.deltaTime);
 
         //jump 

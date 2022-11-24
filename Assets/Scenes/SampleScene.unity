@@ -272,9 +272,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rb: {fileID: 314137277}
-  buttonTime: 0.3
-  jumpHeight: 0
-  cancelRate: 0
+  buttonTime: 0.5
+  jumpHeight: 5
+  cancelRate: 100
   bullet: {fileID: 8501218229995544509, guid: 66d6e7474a7ba6642b5436f7d714f787, type: 3}
   facingDirX: 1
 --- !u!1 &519420028
