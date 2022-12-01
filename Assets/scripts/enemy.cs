@@ -9,7 +9,7 @@ public class enemy : MonoBehaviour
     public float speed = 5f;
     public float strarting;
 
-    float dirX = 1f;
+    public float dirX = 1f;
     bool isAlive = true;
 
     Animator anim;
@@ -62,5 +62,6 @@ public class enemy : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
         
+
     }
 }
