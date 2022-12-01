@@ -8,6 +8,11 @@ public class playerMovement : MonoBehaviour
     public float speed = 10;
     float dirX;
 
+    public AudioSource audio;
+
+    public AudioClip jumpSoundEffect;
+    private Animator anim;
+
     //jumping
     public Rigidbody2D rb;
     public float buttonTime = 0.5f;
@@ -24,7 +29,8 @@ public class playerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        audio = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -38,6 +44,7 @@ public class playerMovement : MonoBehaviour
         if (jumpCancelled && jumping && rb.velocity.y > 0)
         {
             rb.AddForce(Vector2.down * cancelRate);
+
         }
 
     }
@@ -65,6 +72,8 @@ public class playerMovement : MonoBehaviour
             jumping = true;
             jumpCancelled = false;
             jumpTime = 0;
+            audio.clip = jumpSoundEffect;
+            audio.Play();
         }
         if (jumping)
         {
