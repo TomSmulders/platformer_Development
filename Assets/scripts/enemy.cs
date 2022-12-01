@@ -61,7 +61,6 @@ public class enemy : MonoBehaviour
         anim.SetBool("IsAlive", isAlive);
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
-        
-
+        Destroy(gameObject, 1.5f);
     }
 }
