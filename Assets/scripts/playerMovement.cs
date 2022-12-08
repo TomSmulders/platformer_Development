@@ -61,7 +61,7 @@ public class playerMovement : MonoBehaviour
         {
             GameObject spawnedBullet = Instantiate(bullet, transform.position, Quaternion.identity);
             spawnedBullet.GetComponent<bullet>().dirX = facingDirX;
-            anim.Play();
+            //anim.Play();
         }
 
 

@@ -1111,9 +1111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  audio: {fileID: 0}
+  audio: {fileID: 752601477}
   jumpSoundEffect: {fileID: 8300000, guid: 1102e1c94804e4e49be2e9453b478e7e, type: 3}
-  rb: {fileID: 0}
+  rb: {fileID: 752601479}
   buttonTime: 0.5
   jumpHeight: 5
   cancelRate: 100
