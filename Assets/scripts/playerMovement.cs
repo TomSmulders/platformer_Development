@@ -8,7 +8,7 @@ public class playerMovement : MonoBehaviour
     public float speed = 10;
     float dirX;
 
-    public AudioSource audio;
+    public AudioSource Audio;
     private Animator anim;
     public Transform schootPoint;
     public SpriteRenderer sprite;
@@ -27,10 +27,16 @@ public class playerMovement : MonoBehaviour
     public GameObject bullet;
     public float facingDirX = 1;
 
+    //healf
+    public int hp = 1;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        audio = GetComponent<AudioSource>();
+        //set the the compinent to the variable
+        Audio = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
     }
 
@@ -56,7 +62,6 @@ public class playerMovement : MonoBehaviour
         if (jumpCancelled && jumping && rb.velocity.y > 0)
         {
             rb.AddForce(Vector2.down * cancelRate);
-
         }
 
     }
@@ -78,15 +83,15 @@ public class playerMovement : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
         {
             float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumping = true;
             jumpCancelled = false;
             jumpTime = 0;
-            audio.clip = jumpSoundEffect;
-            audio.Play();
+            Audio.clip = jumpSoundEffect;
+            Audio.Play();
         }
         if (jumping)
         {
@@ -111,7 +116,7 @@ public class playerMovement : MonoBehaviour
             sprite.flipX = false;
         }
 
+        //check if player is alive
+        
     }
-
-
 }

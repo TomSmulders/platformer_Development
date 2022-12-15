@@ -103,6 +103,7 @@ MonoBehaviour:
   speed: 15
   liveTimeBullet: 3
   dirX: 1
+  sprite: {fileID: 544153095613798240}
 --- !u!58 &7071504420930220407
 CircleCollider2D:
   m_ObjectHideFlags: 0

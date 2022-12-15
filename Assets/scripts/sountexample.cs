@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class sountexample : MonoBehaviour
 {
-    public GameObject audio;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,10 +12,5 @@ public class sountexample : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Instantiate(audio, transform.position, transform.rotation);
-            Destroy(gameObject);
-        }
     }
 }

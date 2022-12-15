@@ -7,11 +7,21 @@ public class bullet : MonoBehaviour
     public float speed = 15f;
     public float liveTimeBullet = 3;
     public float dirX = 1f;
+    public SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
     {
         Destroy(gameObject, liveTimeBullet);
+        if (dirX < 0)
+        {
+            sprite.flipX = false;
+        }
+        else
+        {
+            sprite.flipX = true;
+        }
+
     }
 
     // Update is called once per frame
