@@ -7,11 +7,13 @@ public class playerMovement : MonoBehaviour
     //walking
     public float speed = 10;
     float dirX;
+    public bool isGrounded;
 
     public AudioSource Audio;
     private Animator anim;
     public Transform schootPoint;
     public SpriteRenderer sprite;
+    
 
     //jumping
     public Rigidbody2D rb;
@@ -43,7 +45,7 @@ public class playerMovement : MonoBehaviour
     private void FixedUpdate()
     {
        dirX = Input.GetAxisRaw("Horizontal");
-
+        rb.velocity = new Vector2(dirX * speed, rb.velocity.y);
         if (dirX < 0)
         {
             rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -77,13 +79,13 @@ public class playerMovement : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             GameObject spawnedBullet = Instantiate(bullet, schootPoint.position, Quaternion.identity);
-            spawnedBullet.GetComponent<bullet>().dirX = facingDirX;
+            spawnedBullet.GetComponent<Bullet>().dirX = facingDirX;
             //anim.Play();
         }
 
 
-
-        if (Input.GetButtonDown("Jump"))
+        
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             float jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * rb.gravityScale));
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
@@ -107,16 +109,35 @@ public class playerMovement : MonoBehaviour
         }
         anim.SetFloat("Walking", Mathf.Abs(rb.velocity.x));
 
-        if (rb.velocity.x < 0)
+        if (rb.velocity.x < -0.1)
         {
             sprite.flipX = true;
+            Debug.Log(dirX);
         }
-        else if (rb.velocity.x > 0)
+        else if (rb.velocity.x > 0.1)
         {
             sprite.flipX = false;
+            Debug.Log(dirX);
         }
 
         //check if player is alive
         
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+            anim.SetBool("Jumping", false);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            anim.SetBool("Jumping", true);
+        }
     }
 }
