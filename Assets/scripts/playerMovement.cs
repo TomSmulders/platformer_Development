@@ -9,9 +9,9 @@ public class playerMovement : MonoBehaviour
     float dirX;
 
     public AudioSource audio;
-
-    public AudioClip jumpSoundEffect;
     private Animator anim;
+    public Transform schootPoint;
+    public SpriteRenderer sprite;
 
     //jumping
     public Rigidbody2D rb;
@@ -21,6 +21,7 @@ public class playerMovement : MonoBehaviour
     float jumpTime;
     bool jumping;
     bool jumpCancelled;
+    public AudioClip jumpSoundEffect;
 
     //schooting
     public GameObject bullet;
@@ -35,9 +36,20 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-       dirX = Input.GetAxis("Horizontal");
+       dirX = Input.GetAxisRaw("Horizontal");
 
-        transform.Translate(transform.right * dirX * speed * Time.deltaTime);
+        if (dirX < 0)
+        {
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+        }
+        else if (dirX > 0)
+        {
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
 
         //jump 
 
@@ -59,7 +71,7 @@ public class playerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            GameObject spawnedBullet = Instantiate(bullet, transform.position, Quaternion.identity);
+            GameObject spawnedBullet = Instantiate(bullet, schootPoint.position, Quaternion.identity);
             spawnedBullet.GetComponent<bullet>().dirX = facingDirX;
             //anim.Play();
         }
@@ -87,6 +99,16 @@ public class playerMovement : MonoBehaviour
             {
                 jumping = false;
             }
+        }
+        anim.SetFloat("Walking", Mathf.Abs(rb.velocity.x));
+
+        if (rb.velocity.x < 0)
+        {
+            sprite.flipX = true;
+        }
+        else if (rb.velocity.x > 0)
+        {
+            sprite.flipX = false;
         }
 
     }
